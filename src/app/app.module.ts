@@ -12,6 +12,8 @@ import { ContentModule } from './modules/content.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { EntityDataModule } from '@ngrx/data';
+import { entityConfig } from './entity-metadata';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { environment } from '../environments/environment';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     NgbModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EntityDataModule.forRoot(entityConfig),
   ],
   exports: [RouterModule, CoreModule],
   providers: [],
