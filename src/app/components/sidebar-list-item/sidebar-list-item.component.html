@@ -1,0 +1,6 @@
+<mat-list-item (click)="onClick()">
+  <mat-icon mat-list-icon *ngIf="icon">{{ icon }}</mat-icon>
+  <div [ngClass]="{'fw-bold': isBold}">
+    {{ text }}
+  </div>
+</mat-list-item>
