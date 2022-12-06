@@ -1,6 +1,8 @@
 import { EntityMetadataMap, EntityDataModuleConfig } from '@ngrx/data';
-
-const entityMetadata: EntityMetadataMap = {};
+import { blogEntityMetadata } from './ngrx/data/blog/blog.entity-metadata';
+const entityMetadata: EntityMetadataMap = {
+  ...blogEntityMetadata
+};
 
 const pluralNames = {  };
 

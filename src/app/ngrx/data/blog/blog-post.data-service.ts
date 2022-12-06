@@ -19,9 +19,11 @@ export class BlogPostDataService extends DefaultDataService<typeof BlogPost> {
     logger.log('Created custom BlogPost EntityDataService');
   }
 
-  // override getAll(): Observable<typeof BlogPost[]> {
-  //   return super.getAll()
-  // }
+  override getAll(): Observable<typeof BlogPost[]> {
+    return super.getAll().pipe(map(blogs => {console.log(blogs); return blogs;}))
+    // return super.getAll().pipe(map(blogs => blogs.map(blog => this.mapBlogPost(blog))))
+
+  }
 
   // getById(id: string | number): Observable<Hero> {
   //   return super.getById(id).pipe(map(hero => this.mapHero(hero)));

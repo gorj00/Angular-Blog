@@ -2,9 +2,7 @@ import { EntityMetadataMap, EntityDataModuleConfig, DefaultDataServiceConfig } f
 
 
 export const blogEntityMetadata: EntityMetadataMap = {
-  BlogPost: {
-    entityName: 'blog',
-  },
+  BlogPost: {},
   Tag: {},
 };
 

@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { BlogPostDataService } from 'src/app/ngrx/data/blog/blog-post.data-service';
+import { HttpService } from 'src/app/services/http.service';
+import { BlogCollectionService } from 'src/app/ngrx/data/blog/blog.collection-service';
+
 @Component({
   selector: 'app-blog-posts',
   templateUrl: './blog-posts.component.html',
@@ -8,12 +11,9 @@ import { BlogPostDataService } from 'src/app/ngrx/data/blog/blog-post.data-servi
 })
 export class BlogPostsComponent implements OnInit {
 
-  constructor(private blogPostsDs: BlogPostDataService) {
+  constructor(private http: HttpService, private bs: BlogCollectionService) {
    }
 
-  ngOnInit(): void {
-    this.blogPostsDs.getById(7)
-
-  }
+  ngOnInit(): void {}
 
 }
