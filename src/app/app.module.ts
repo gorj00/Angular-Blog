@@ -31,7 +31,7 @@ import { entityConfig } from './entity-metadata';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     NgbModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EntityDataModule.forRoot(entityConfig),
+    EntityDataModule.forRoot({}),
   ],
   exports: [RouterModule, CoreModule],
   providers: [],
