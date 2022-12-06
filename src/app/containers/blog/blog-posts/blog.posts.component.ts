@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { BlogPostDataService } from 'src/app/ngrx/data/blog/blog-post.data-service';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 import { BlogCollectionService } from 'src/app/ngrx/data/blog/blog.collection-service';
 
