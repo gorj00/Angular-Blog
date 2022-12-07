@@ -12,7 +12,7 @@ import {
 import { BlogPostDataService } from './blog-post.data-service';
 import { Observable } from 'rxjs';
 import { tap, mergeMap } from 'rxjs/operators';
-import { BlogPost } from '../../../models/blog.model';
+import { BlogPost } from '../../../models/blog.models';
 
 @Injectable()
 export class BlogCollectionService {
@@ -34,14 +34,13 @@ export class BlogCollectionService {
 
   getBlogPosts() { this.blogService.getAll(); }
   getBlogPostById(id: number) { this.blogService.getByKey(id); }
-  updateBlogPost(propsToUpdateWithIdObj: Partial<typeof BlogPost>) { 
+  updateBlogPost(propsToUpdateWithIdObj: Partial<typeof BlogPost>) {
     this.blogService.update(propsToUpdateWithIdObj);
   }
   addTagToBlogPost(blogPostId: number, tagId: number) {
     if (blogPostId && tagId) {
       this.blogService.setLoaded(false)
       this.blogService.setLoading(true)
-      console.log('TAG ID RUNNING')
       this.blogPostDataService.addTagToBlogPost(blogPostId, tagId).pipe(
         tap((updatedBlogPost: typeof BlogPost) => {
           this.blogService.updateOneInCache(updatedBlogPost)

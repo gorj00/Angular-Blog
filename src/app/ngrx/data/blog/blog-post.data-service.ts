@@ -8,7 +8,7 @@ import {
   QueryParams
 } from '@ngrx/data';
 import { Observable } from 'rxjs';
-import { BlogPost } from '../../../models/blog.model';
+import { BlogPost } from '../../../models/blog.models';
 import { BlogHttpUrlGenerator } from './blog.url-generator';
 
 @Injectable({ providedIn: 'root'})
@@ -18,11 +18,11 @@ export class BlogPostDataService extends DefaultDataService<typeof BlogPost> {
     logger.log('Created custom BlogPost EntityDataService');
   }
 
-  // CUSTOM METHODS APART FROM AUTO-CRETED BY COLLECTION SERVICE 
+  // CUSTOM METHODS APART FROM AUTO-CRETED BY COLLECTION SERVICE
   // Further handled in collection service
   addTagToBlogPost(blogPostId: number, tagId: number) {
     return this.execute(
-      'PUT', 
+      'PUT',
       `https://endevel-task.doc.endevel.cz/blog/${blogPostId}/add_tag/${tagId}/`,
     )
   }

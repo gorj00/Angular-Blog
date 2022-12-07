@@ -37,7 +37,7 @@ export class HttpService {
   /**
    * POST request
    * @param {string} endPoint end point of the api
-   * @param {Object} params body of the request.
+   * @param {Object} body body of the request.
    * @param {IRequestOptions} options options of the request like headers, body, etc.
    * @returns {Observable<T>}
    */
@@ -48,12 +48,12 @@ export class HttpService {
   /**
    * PUT request
    * @param {string} endPoint end point of the api
-   * @param {Object} params body of the request.
+   * @param {Object} body body of the request.
    * @param {IRequestOptions} options options of the request like headers, body, etc.
    * @returns {Observable<T>}
    */
-  public Put<T>(endPoint: string, params: Object, options?: IRequestOptions): Observable<T> {
-    return this.http.put<T>(this.api + endPoint, params, options);
+  public Put<T>(endPoint: string, body: Object, options?: IRequestOptions): Observable<T> {
+    return this.http.put<T>(this.api + endPoint, body, options);
   }
 
   /**
