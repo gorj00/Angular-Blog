@@ -4,7 +4,7 @@ import {
 } from "@ngrx/data";
 import { blogRootUrls } from "./blog.entity-metadata";
 
-@Injectable()
+@Injectable({ providedIn: 'root'})
 // Based on: https://stackoverflow.com/a/62247961/19275722
 export class BlogHttpUrlGenerator extends DefaultHttpUrlGenerator {
   constructor(private aPluralizer: Pluralizer = new DefaultPluralizer([])) {
@@ -17,11 +17,6 @@ export class BlogHttpUrlGenerator extends DefaultHttpUrlGenerator {
   ): HttpResourceUrls {
     let resourceUrls = this.knownHttpResourceUrls[entityName];
     if (!resourceUrls) {
-      // rootUrls contains
-      // mapping of individual ngrx data entities
-      // to the root URLs of their respective data sources.
-      // It contains only entities which do not have
-      // the default root URL.
       if (blogRootUrls.hasOwnProperty(entityName)) {
         root = blogRootUrls[entityName];
       }
@@ -34,13 +29,12 @@ export class BlogHttpUrlGenerator extends DefaultHttpUrlGenerator {
         default:
           break;
       }
-      // Never pluralize
+      // Never pluralize, backend always in singular form
       const url = `${nRoot}/${/* this.aPluralizer.pluralize(
         entityName
       ) */urlEntityName}/`.toLowerCase();
 
-      // remove after testing
-      console.log('-- entityName: ' + entityName + ', URL: ' + url);
+      // console.log('-- entityName: ' + entityName + ', URL: ' + url);
 
       resourceUrls = {
         entityResourceUrl: url,

@@ -13,6 +13,9 @@ export class BlogPostsComponent implements OnInit {
   constructor(private http: HttpService, private bs: BlogCollectionService) {
    }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.bs.getBlogPosts()
+    // this.bs.addTagToBlogPost(10, 6)
+  }
 
 }

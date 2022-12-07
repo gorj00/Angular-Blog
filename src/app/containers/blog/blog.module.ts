@@ -26,7 +26,7 @@ import { BlogCollectionService } from 'src/app/ngrx/data/blog/blog.collection-se
     HttpService,
     { provide: 'apiUrl', useValue: 'https://endevel-task.doc.endevel.cz/' },
     { provide: HttpUrlGenerator, useClass: BlogHttpUrlGenerator },
-    BlogPostDataService,
+    // BlogPostDataService,
     BlogCollectionService,
   ],
   bootstrap: []
