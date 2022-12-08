@@ -1,9 +1,8 @@
-import { EntityMetadataMap, EntityDataModuleConfig, DefaultDataServiceConfig } from '@ngrx/data';
-
+import { EntityMetadataMap } from '@ngrx/data';
+import { BlogPost, Tag } from 'src/app/models/blog.models';
 
 export const blogEntityMetadata: EntityMetadataMap = {
-  BlogPost: {},
-  Tag: {},
+  BlogPost, Tag
 };
 
 export const blogRootUrls = {

@@ -18,13 +18,14 @@ export class BlogPostsComponent implements OnInit {
     private blogFacade: BlogFacade,
     protected blogDataService: BlogDataService,
   ) {
-   }
+  }
+
+  data$ = this.blogDataService.data$
 
   ngOnInit(): void {
     // this.tagsFacade.fetchTagsList()
     // this.bs.getBlogPosts()
     // this.bs.addTagToBlogPost(10, 6)
-    this.blogDataService.blogPostsPerPage$.subscribe(posts => console.log(posts))
   }
 
 }

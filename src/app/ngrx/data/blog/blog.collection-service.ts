@@ -12,12 +12,12 @@ import {
 import { BlogPostDataService } from './blog-post.data-service';
 import { Observable } from 'rxjs';
 import { tap, mergeMap } from 'rxjs/operators';
-import { BlogPost } from '../../../models/blog.models';
+import { BlogPost, IBlogPost } from '../../../models/blog.models';
 
 @Injectable()
 export class BlogCollectionService {
   blogService
-  blogs$
+  blogs$: Observable<IBlogPost[]>
   loading$
   blogsCount$
 
@@ -25,7 +25,7 @@ export class BlogCollectionService {
     EntityCollectionServiceFactory: EntityCollectionServiceFactory,
     private blogPostDataService: BlogPostDataService,
   ) {
-    this.blogService = EntityCollectionServiceFactory.create<typeof BlogPost>('BlogPost');
+    this.blogService = EntityCollectionServiceFactory.create<IBlogPost>('BlogPost');
 
     this.loading$ = this.blogService.loading$;
     this.blogs$ = this.blogService.entities$
@@ -34,7 +34,7 @@ export class BlogCollectionService {
 
   getBlogPosts() { this.blogService.getAll(); }
   getBlogPostById(id: number) { this.blogService.getByKey(id); }
-  updateBlogPost(propsToUpdateWithIdObj: Partial<typeof BlogPost>) {
+  updateBlogPost(propsToUpdateWithIdObj: Partial<IBlogPost>) {
     this.blogService.update(propsToUpdateWithIdObj);
   }
   addTagToBlogPost(blogPostId: number, tagId: number) {
@@ -42,7 +42,7 @@ export class BlogCollectionService {
       this.blogService.setLoaded(false)
       this.blogService.setLoading(true)
       this.blogPostDataService.addTagToBlogPost(blogPostId, tagId).pipe(
-        tap((updatedBlogPost: typeof BlogPost) => {
+        tap((updatedBlogPost: IBlogPost) => {
           this.blogService.updateOneInCache(updatedBlogPost)
           this.blogService.setLoading(false)
           this.blogService.setLoaded(true)
