@@ -11,9 +11,10 @@ import { BlogPostDataService } from 'src/app/ngrx/data/blog/blog-post.data-servi
 import { BlogHttpUrlGenerator } from 'src/app/ngrx/data/blog/blog.url-generator'
 import { BlogPostsComponent } from './blog-posts/blog.posts.component'
 import { BlogCollectionService } from 'src/app/ngrx/data/blog/blog.collection-service';
-import { TagsEffects } from 'src/app/ngrx/store/tags/tags.effects';
-import { tagsFeature } from 'src/app/ngrx/store/tags/tags.feature';
-import { TagsService } from 'src/app/services/tags.service';
+import { BlogEffects } from 'src/app/ngrx/store/blog/blog.effects';
+import { blogFeature } from 'src/app/ngrx/store/blog/blog.feature';
+import { BlogService } from 'src/app/services/blog.service';
+import { BlogDataService } from './blog-dara.service';
 @NgModule({
   declarations: [
     BlogPostsComponent,
@@ -22,16 +23,17 @@ import { TagsService } from 'src/app/services/tags.service';
     CommonModule,
     SharedModule,
     BlogRoutingModule,
-    StoreModule.forFeature(tagsFeature),
-    EffectsModule.forFeature([TagsEffects]),
+    StoreModule.forFeature(blogFeature),
+    EffectsModule.forFeature([BlogEffects]),
   ],
   providers: [
     HttpService,
-    TagsService,
+    BlogService,
     { provide: 'apiUrl', useValue: 'https://endevel-task.doc.endevel.cz/' },
     { provide: HttpUrlGenerator, useClass: BlogHttpUrlGenerator },
     // BlogPostDataService,
     BlogCollectionService,
+    BlogDataService,
   ],
   bootstrap: []
 })

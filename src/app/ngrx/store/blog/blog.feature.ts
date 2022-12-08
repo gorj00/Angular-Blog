@@ -1,4 +1,4 @@
-import { TagsActions } from './tags.actions';
+import { BlogActions } from './blog.actions';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { ITag, ITagsState } from '../../../models/blog.models'
 
@@ -9,35 +9,35 @@ const initialState: ITagsState = {
   errors: null,
 };
 
-export const tagsFeature = createFeature({
+export const blogFeature = createFeature({
   name: 'tags',
   reducer: createReducer(
     initialState,
     on(
-      TagsActions.tags_list_request ||
-      TagsActions.create_tag_request ||
-      TagsActions.update_tag_request
+      BlogActions.tags_list_request ||
+      BlogActions.create_tag_request ||
+      BlogActions.update_tag_request
     , (state: ITagsState) => ({
       ...state,
       loading: true,
     })),
-    on(TagsActions.tags_list_response, (state: ITagsState, { items, total }) => ({
+    on(BlogActions.tags_list_response, (state: ITagsState, { items, total }) => ({
       ...state,
       loading: false,
       tags: items,
       tagsTotal: total,
     })),
     on(
-      TagsActions.create_tag_response ||
-      TagsActions.update_tag_response
+      BlogActions.create_tag_response ||
+      BlogActions.update_tag_response
     , (state: ITagsState) => ({
       ...state,
       loading: false,
     })),
     on(
-      TagsActions.create_tag_failure ||
-      TagsActions.tags_list_failure ||
-      TagsActions.update_tag_failure
+      BlogActions.create_tag_failure ||
+      BlogActions.tags_list_failure ||
+      BlogActions.update_tag_failure
     , (state: ITagsState, { error }) => ({
       ...state,
       loading: false,
@@ -52,4 +52,4 @@ export const {
   selectTagsState,
 
   // + AUTO GENERATED SELECTORS
-  } = tagsFeature
+  } = blogFeature

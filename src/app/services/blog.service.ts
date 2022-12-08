@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { ITag, INewTag } from '../models/blog.models';
 
 @Injectable()
-export class TagsService {
+export class BlogService {
   paths = {
     tag: 'tag',
   };

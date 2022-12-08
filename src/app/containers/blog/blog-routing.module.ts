@@ -5,6 +5,9 @@ import { BlogPostsComponent } from './blog-posts/blog.posts.component'
 const routes: Routes = [
   { path: '', component: BlogPostsComponent},
   // { path: '', component: BlogPostsComponent, outlet: 'sidebar'}
+  // { path: '/:blogPostId', component: BlogPostsComponent, },
+  // { path: '/:blogPostId/edit', component: BlogPostsComponent, },
+  // { path: '/new', component: BlogPostsComponent, },
 
 ];
 

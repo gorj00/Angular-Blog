@@ -15,7 +15,7 @@ enum actionTypes {
   UPDATE_TAG_FAILURE = 'UPDATE_TAG_FAILURE',
 }
 
-export const TagsActions = createActionGroup({
+export const BlogActions = createActionGroup({
   source: '[TAGS]',
   events: {
     [actionTypes.TAGS_LIST_REQUEST]: emptyProps(),
