@@ -4,9 +4,26 @@ import { map, mergeMap, catchError } from 'rxjs/operators'
 import { BlogService } from '../../../services/blog.service';
 import { BlogActions } from './blog.actions';
 import { of } from 'rxjs';
+import { Action } from '@ngrx/store';
+import { OnInitEffects } from '@ngrx/effects';
 
 @Injectable()
-export class BlogEffects {
+export class BlogEffects implements OnInitEffects {
+
+  // MODULE INIT EFFECTS
+  // ROOT_EFFECTS_INIT not working for lazily loaded modules, works only forRoot() EffectsModule
+  ngrxOnInitEffects(): Action {
+    return BlogActions.blog_module_init();
+  }
+
+  blogModuleInitialFetchEffect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BlogActions.blog_module_init),
+      map(() => BlogActions.tags_list_request())
+    )
+  );
+
+  // REGULAR EFFECTS
   fetchTagsListEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActions.tags_list_request),

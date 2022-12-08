@@ -2,6 +2,7 @@ import { createActionGroup, emptyProps } from '@ngrx/store';
 import { ITag, INewTag } from '../../../models/blog.models';
 
 enum actionTypes {
+  BLOG_MODULE_INIT = 'BLOG_MODULE_INIT',
   TAGS_LIST_REQUEST = 'TAGS_LIST_REQUEST',
   TAGS_LIST_RESPONSE = 'TAGS_LIST_RESPONSE',
   TAGS_LIST_FAILURE = 'TAGS_LIST_FAILURE',
@@ -16,8 +17,10 @@ enum actionTypes {
 }
 
 export const BlogActions = createActionGroup({
-  source: '[TAGS]',
+  source: '[BLOG]',
   events: {
+    [actionTypes.BLOG_MODULE_INIT]: emptyProps(),
+
     [actionTypes.TAGS_LIST_REQUEST]: emptyProps(),
     [actionTypes.TAGS_LIST_RESPONSE]: (items: ITag[], total: number) => ({ items, total }),
     [actionTypes.TAGS_LIST_FAILURE]: (error: any) => ({ error }),
