@@ -1,3 +1,4 @@
+import { ITag } from './../../../models/blog.models';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, catchError } from 'rxjs/operators'
@@ -29,9 +30,11 @@ export class BlogEffects implements OnInitEffects {
       ofType(BlogActions.tags_list_request),
       mergeMap(() => this.blogService.getTagsList()
         .pipe(
-          map((tags) =>
-            BlogActions.tags_list_response(tags, tags?.length ? tags.length : 0)
-          ),
+          map((tags) => {
+            const tagsById: {[key: number]: ITag} = {}
+            tags.length && tags.forEach((item: ITag) => (tagsById[item.id] = item))
+            return BlogActions.tags_list_response(tags, tagsById, tags?.length ? tags.length : 0)
+          }),
           catchError((error) => of(BlogActions.tags_list_failure(error)))
         )
       )

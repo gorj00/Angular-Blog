@@ -10,6 +10,7 @@ import { blogEntityMetadata } from '../../ngrx/data/blog/blog.entity-metadata'
 import { BlogPostDataService } from 'src/app/ngrx/data/blog/blog-post.data-service';
 import { BlogHttpUrlGenerator } from 'src/app/ngrx/data/blog/blog.url-generator'
 import { BlogPostsComponent } from './blog-posts/blog.posts.component'
+import { BlogSidebarComponent } from './blog-sidebar/blog-sidebar.component';
 import { BlogCollectionService } from 'src/app/ngrx/data/blog/blog.collection-service';
 import { BlogEffects } from 'src/app/ngrx/store/blog/blog.effects';
 import { blogFeature } from 'src/app/ngrx/store/blog/blog.feature';
@@ -18,6 +19,7 @@ import { BlogDataService } from './blog-dara.service';
 @NgModule({
   declarations: [
     BlogPostsComponent,
+    BlogSidebarComponent,
   ],
   imports: [
     CommonModule,

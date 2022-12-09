@@ -19,6 +19,7 @@ export interface INewTag {
 
 export interface ITagsState {
   tags:      ITag[];
+  tagsById:  {[key: number]: ITag};
   tagsTotal: number | null;
   loading:   boolean;
   errors:    any;

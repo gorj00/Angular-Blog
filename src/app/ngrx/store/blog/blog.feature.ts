@@ -4,6 +4,7 @@ import { ITag, ITagsState } from '../../../models/blog.models'
 
 const initialState: ITagsState = {
   tags: [],
+  tagsById: {},
   tagsTotal: null,
   loading: false,
   errors: null,
@@ -21,10 +22,11 @@ export const blogFeature = createFeature({
       ...state,
       loading: true,
     })),
-    on(BlogActions.tags_list_response, (state: ITagsState, { items, total }) => ({
+    on(BlogActions.tags_list_response, (state: ITagsState, { items, itemsById, total }) => ({
       ...state,
       loading: false,
       tags: items,
+      tagsById:itemsById,
       tagsTotal: total,
     })),
     on(

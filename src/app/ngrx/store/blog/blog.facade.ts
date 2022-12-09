@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 @Injectable({ providedIn: 'root' })
 export class BlogFacade {
   tags$ = this.store.select(blogFeature.selectTags)
+  tagsById$ = this.store.select(blogFeature.selectTagsById)
   tagsTotal$ = this.store.select(blogFeature.selectTagsTotal)
   tagsLoading$ = this.store.select(blogFeature.selectLoading)
   tagsError$ = this.store.select(blogFeature.selectErrors)

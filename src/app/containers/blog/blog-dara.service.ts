@@ -25,6 +25,7 @@ export class BlogDataService {
   }
 
   tags$ = this.blogFacade.tags$
+  tagsById$ = this.blogFacade.tagsById$
 
   blogPosts$ = this.blogPostCS.blogs$.pipe(
     // Warning! If no blogposts, infinite loop
@@ -65,9 +66,10 @@ export class BlogDataService {
     this.blogPostsPerPage$,
     this.listPage$,
     this.tags$,
+    this.tagsById$,
   ).pipe(
-    map(([blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags]) => ({
-      blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags
+    map(([blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById]) => ({
+      blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById
     })),
     shareReplay({ refCount: true, bufferSize: 1 })
   )

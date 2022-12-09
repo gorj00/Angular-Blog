@@ -1,0 +1,10 @@
+<mat-card *ngIf="data$ | async as data">
+  <h2>Tags</h2>
+  <mat-list>
+    <app-sidebar-list-item *ngFor="let tag of data.tags; index as i"
+      [text]="tag.name"
+      [icon]="'folder'"
+      [emitData]="tag.id"
+    ></app-sidebar-list-item>
+  </mat-list>
+</mat-card>

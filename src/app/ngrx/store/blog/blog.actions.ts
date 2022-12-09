@@ -22,7 +22,9 @@ export const BlogActions = createActionGroup({
     [actionTypes.BLOG_MODULE_INIT]: emptyProps(),
 
     [actionTypes.TAGS_LIST_REQUEST]: emptyProps(),
-    [actionTypes.TAGS_LIST_RESPONSE]: (items: ITag[], total: number) => ({ items, total }),
+    [actionTypes.TAGS_LIST_RESPONSE]: (
+      items: ITag[], itemsById: {[key: number]: ITag}, total: number
+    ) => ({ items, itemsById, total }),
     [actionTypes.TAGS_LIST_FAILURE]: (error: any) => ({ error }),
 
     [actionTypes.CREATE_TAG_REQUEST]: (newTag: INewTag) => ({ newTag }),
