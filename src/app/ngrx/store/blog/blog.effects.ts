@@ -1,12 +1,16 @@
+import { switchMap } from 'rxjs';
 import { ITag } from './../../../models/blog.models';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, catchError } from 'rxjs/operators'
+import { map, mergeMap, catchError, filter } from 'rxjs/operators'
 import { BlogService } from '../../../services/blog.service';
 import { BlogActions } from './blog.actions';
+import { BlogCollectionService } from '../../data/blog/blog.collection-service';
 import { of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { OnInitEffects } from '@ngrx/effects';
+import { ROUTER_NAVIGATION } from '@ngrx/router-store';
+import { IRouterNavigationAction } from 'src/app/models/router.models';
 
 @Injectable()
 export class BlogEffects implements OnInitEffects {
@@ -65,9 +69,24 @@ export class BlogEffects implements OnInitEffects {
     )
   );
 
+  fetchBlogPostByIdFromRouterEffect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATION),
+      filter((r: IRouterNavigationAction) => {
+        const { payload: { routerState: { url, params } }} = r
+        return url.startsWith('/blog/') && params['blogPostId']
+      }),
+      map((r: IRouterNavigationAction) => {
+        const { payload: { routerState: { params } }} = r
+        return params['blogPostId']
+      }),
+      map(id => this.blogCS.dispatchCSBlogPostFetchByIdForEffect(+id)),
+    )
+  );
 
   constructor(
     private actions$: Actions,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private blogCS: BlogCollectionService,
   ) {}
 }

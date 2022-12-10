@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { RouterSerializer } from './ngrx/router/router-serializer';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,9 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     EntityDataModule.forRoot(entityConfig),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     NgbModule,
-    StoreRouterConnectingModule.forRoot(),
+    StoreRouterConnectingModule.forRoot({
+      serializer: RouterSerializer,
+    }),
   ],
   exports: [RouterModule, CoreModule],
   providers: [],

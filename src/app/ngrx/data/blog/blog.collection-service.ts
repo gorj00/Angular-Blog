@@ -7,7 +7,8 @@ import {
   DefaultDataService,
   HttpUrlGenerator,
   Logger,
-  QueryParams
+  QueryParams,
+  EntityOp
 } from '@ngrx/data';
 import { BlogPostDataService } from './blog-post.data-service';
 import { Observable } from 'rxjs';
@@ -49,6 +50,9 @@ export class BlogCollectionService {
         })
       ).subscribe()
     }
+  }
 
+  dispatchCSBlogPostFetchByIdForEffect(id: number) {
+    return this.blogService.createEntityAction(EntityOp.QUERY_BY_KEY, id)
   }
 }
