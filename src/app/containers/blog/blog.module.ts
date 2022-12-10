@@ -16,10 +16,13 @@ import { BlogEffects } from 'src/app/ngrx/store/blog/blog.effects';
 import { blogFeature } from 'src/app/ngrx/store/blog/blog.feature';
 import { BlogService } from 'src/app/services/blog.service';
 import { BlogDataService } from './blog-dara.service';
+import { BlogPostComponent } from './blog-post/blog-post.component';
+
 @NgModule({
   declarations: [
     BlogPostsComponent,
     BlogSidebarComponent,
+    BlogPostComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,15 @@
+<mat-tab-group>
+
+  <mat-tab
+    *ngFor="let tab of tabs"
+    [attr.label]="!tab?.icon ? tab.tabTitle : null"
+  >
+    <ng-template mat-tab-label [ngIf]="tab?.icon">
+      <mat-icon>{{ tab.icon }}</mat-icon>
+      {{ tab.tabTitle}}
+    </ng-template>
+
+  </mat-tab>
+
+
+</mat-tab-group>
