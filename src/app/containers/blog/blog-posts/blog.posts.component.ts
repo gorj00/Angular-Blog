@@ -4,6 +4,7 @@ import { BlogCollectionService } from 'src/app/ngrx/data/blog/blog.collection-se
 import { BlogFacade } from 'src/app/ngrx/store/blog/blog.facade';
 import { BlogDataService } from '../blog-dara.service';
 import { Router } from '@angular/router';
+import { EBlogModes } from 'src/app/models/blog.models';
 
 @Component({
   selector: 'app-blog-posts',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogPostsComponent implements OnInit {
+
 
   constructor(
     private http: HttpService,
@@ -23,9 +25,11 @@ export class BlogPostsComponent implements OnInit {
   }
 
   data$ = this.blogDataService.data$
+  // To have access in the template
+  EBlogModes = EBlogModes
 
-  onSelectBlogPost(id: number) {
-    this.blogDataService.onSelectBlogPost(id)
+  onSelectBlogPost(id: number, mode: EBlogModes = EBlogModes.READ) {
+    this.blogDataService.onSelectBlogPost(id, mode)
     this.router.navigate(['/blog', id])
   }
 

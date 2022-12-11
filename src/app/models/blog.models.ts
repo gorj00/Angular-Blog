@@ -37,4 +37,9 @@ export const Tag = {
   },
 }
 
+ export enum EBlogModes {
+    READ = 0,
+    EDIT = 1,
+  }
+
 

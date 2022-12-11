@@ -1,8 +1,8 @@
-<mat-tab-group>
+<mat-tab-group [selectedIndex]="0">
 
   <mat-tab>
     <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">article</mat-icon>
+      <mat-icon>article</mat-icon>
       Detail
     </ng-template>
     <app-blog-post-detail
@@ -12,7 +12,7 @@
 
   <mat-tab>
     <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">edit</mat-icon>
+      <mat-icon>edit</mat-icon>
       Edit
     </ng-template>
     <app-blog-post-edit></app-blog-post-edit>
