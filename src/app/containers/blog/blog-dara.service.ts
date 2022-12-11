@@ -3,15 +3,15 @@ import { Subject, BehaviorSubject, combineLatest, distinctUntilChanged, filter, 
 import { BlogCollectionService } from "src/app/ngrx/data/blog/blog.collection-service";
 import { BlogFacade } from "src/app/ngrx/store/blog/blog.facade";
 import { IBlogPost } from "src/app/models/blog.models";
-
 @Injectable()
 export class BlogDataService {
   private blogPostspaginationSize: number = 5;
   private selectedListPageSubject = new BehaviorSubject<number>(1);
   selectedListPage$ = this.selectedListPageSubject.asObservable();
-  private selectedBlogPostIdSubject = new Subject<number>();
+  private selectedBlogPostIdSubject = new BehaviorSubject<number | null>(null);
+  selectedBlogPostId$ = this.selectedBlogPostIdSubject.asObservable();
   private selectedTagIdSubject = new Subject<number>();
-  private selectedBlogPostModeSubjecct = new BehaviorSubject<'read' | 'ëdit'>('read');
+  private selectedBlogPostModeSubjecct = new BehaviorSubject<'read' | 'edit'>('read');
   // private editedBlogPostIdSubject = new Subject<number>();
 
   // INITIAL FETCHES ARE HANDLED IN NGRX EFFECTS IN BLOG STORE
@@ -24,10 +24,24 @@ export class BlogDataService {
     this.selectedListPageSubject.next(page)
   }
 
+  onSelectBlogPost(blogPostId: number | null) {
+    this.selectedBlogPostIdSubject.next(blogPostId)
+  }
+
   tags$ = this.blogFacade.tags$
   tagsById$ = this.blogFacade.tagsById$
 
   blogPosts$ = this.blogPostCS.blogs$
+  selectedBlogPost$ = this.selectedBlogPostId$.pipe(
+    switchMap((blogPostId: number | null) => {
+      if (blogPostId) {
+        return this.blogPostCS.getBlogPostById(blogPostId)
+      } else {
+        return of(null)
+      }
+    }),
+    shareReplay({ refCount: true, bufferSize: 1 }),
+  )
 
   blogPostsCount$ = this.blogPostCS.blogsCount$;
   listPage$ = combineLatest(this.blogPostsCount$, this.selectedListPage$).pipe(
@@ -64,11 +78,13 @@ export class BlogDataService {
     this.listPage$,
     this.tags$,
     this.tagsById$,
+    this.selectedBlogPost$
   ).pipe(
-    map(([blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById]) => ({
-      blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById
+    map(([blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById, selectedBlogPost]) => ({
+      blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById, selectedBlogPost
     })),
-    shareReplay({ refCount: true, bufferSize: 1 })
+    tap(obj => console.log(obj)),
+    shareReplay({ refCount: true, bufferSize: 1 }),
   )
   // tags$
   // selectedBlogPost$

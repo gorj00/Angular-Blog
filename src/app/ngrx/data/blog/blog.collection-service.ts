@@ -34,7 +34,9 @@ export class BlogCollectionService {
   }
 
   getBlogPosts() { this.blogService.getAll(); }
-  getBlogPostById(id: number) { this.blogService.getByKey(id); }
+  getBlogPostById(id: number) {
+    return this.blogService.getByKey(id);
+  }
   updateBlogPost(propsToUpdateWithIdObj: Partial<IBlogPost>) {
     this.blogService.update(propsToUpdateWithIdObj);
   }

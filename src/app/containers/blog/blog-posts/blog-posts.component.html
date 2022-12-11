@@ -3,9 +3,8 @@
 
     <ng-template [ngIf]="data.blogPostsPerPage && !data.blogPostsLoading" [ngIfElse]="spinner">
       <div class="offset-3 col-6 pb-5" *ngFor="let post of data.blogPostsPerPage">
-        <mat-card class="example-card" >
+        <mat-card>
           <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title>{{ post.title }}</mat-card-title>
           </mat-card-header>
           <img mat-card-image [src]="post.thumbnail" alt="">
@@ -20,7 +19,9 @@
             </mat-chip-list>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-button>DETAIL</button>
+            <button mat-button (click)="onSelectBlogPost(post.id)">
+              DETAIL
+            </button>
             <button mat-button>EDIT</button>
           </mat-card-actions>
         </mat-card>

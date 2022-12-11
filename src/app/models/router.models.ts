@@ -1,4 +1,4 @@
-import { Params, RouterStateSnapshot } from '@angular/router';
+import { Params } from '@angular/router';
 
 export interface IRouterState {
   url: string;

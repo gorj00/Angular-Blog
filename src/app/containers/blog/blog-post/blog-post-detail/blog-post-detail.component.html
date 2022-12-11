@@ -1,1 +1,29 @@
-<p>blog-post-detail works!</p>
+<ng-container *ngIf="data$ | async as data">
+
+<mat-card>
+  <button mat-button (click)="onGoBack()">ZPĚT</button>
+  <mat-card-header>
+    <mat-card-title>{{ data.selectedBlogPost?.title }}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image [src]="data.selectedBlogPost?.image" alt="">
+  <mat-card-content>
+    <p>{{ data.selectedBlogPost?.text }}</p>
+  </mat-card-content>
+  <mat-card-content *ngIf="data.selectedBlogPost?.tags?.length">
+    <mat-chip-list>
+      <mat-chip *ngFor="let tag of data.selectedBlogPost?.tags">
+        {{ data.tagsById[tag].name }}
+      </mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+  <mat-card-actions>
+
+  </mat-card-actions>
+</mat-card>
+<ng-template #spinner>
+  <div class="col">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+
+</ng-container>

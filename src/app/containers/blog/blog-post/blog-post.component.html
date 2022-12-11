@@ -1,10 +1,13 @@
 <mat-tab-group>
+
   <mat-tab>
     <ng-template mat-tab-label>
       <mat-icon class="example-tab-icon">article</mat-icon>
       Detail
     </ng-template>
-    Content 1
+    <app-blog-post-detail
+      (onGoBackAction)="goBack()"
+    ></app-blog-post-detail>
   </mat-tab>
 
   <mat-tab>
@@ -12,7 +15,7 @@
       <mat-icon class="example-tab-icon">edit</mat-icon>
       Edit
     </ng-template>
-    Content 2
+    <app-blog-post-edit></app-blog-post-edit>
   </mat-tab>
 
 </mat-tab-group>

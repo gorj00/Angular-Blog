@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { BlogDataService } from '../../blog-dara.service';
 
 @Component({
   selector: 'app-blog-post-detail',
@@ -6,8 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./blog-post-detail.component.less']
 })
 export class BlogPostDetailComponent implements OnInit {
+  @Output() onGoBackAction = new EventEmitter<void>()
 
-  constructor() { }
+  constructor(
+    protected blogDataService: BlogDataService,
+  ) { }
+
+  data$ = this.blogDataService.data$
+
+  onGoBack() {
+    this.onGoBackAction.emit()
+  }
 
   ngOnInit(): void {
   }

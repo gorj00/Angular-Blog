@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ITab } from 'src/app/models/shared.models';
 import { BlogDataService } from '../blog-dara.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-blog-post',
@@ -15,12 +16,18 @@ export class BlogPostComponent implements OnInit {
 
   constructor(
     protected blogDataService: BlogDataService,
+    private router: Router,
   ) { }
   data$ = this.blogDataService.data$
 
 
   onTabIdChanged(tabId: number) {
     console.log(tabId)
+  }
+
+  goBack() {
+    this.blogDataService.onSelectBlogPost(null)
+    this.router.navigate(['/blog'])
   }
 
   ngOnInit(): void {
