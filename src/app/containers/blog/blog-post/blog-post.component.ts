@@ -17,7 +17,7 @@ export class BlogPostComponent implements OnInit {
   constructor(
     protected blogDataService: BlogDataService,
     private router: Router,
-  ) { }
+  ) {}
   data$ = this.blogDataService.data$
 
 

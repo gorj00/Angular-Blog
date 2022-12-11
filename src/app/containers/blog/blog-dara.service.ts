@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Subject, BehaviorSubject, combineLatest, distinctUntilChanged, filter, map, shareReplay, tap, switchMap, of } from "rxjs";
+import { Subject, BehaviorSubject, combineLatest, distinctUntilChanged, filter, map, shareReplay, tap, switchMap, of, startWith } from "rxjs";
 import { BlogCollectionService } from "src/app/ngrx/data/blog/blog.collection-service";
 import { BlogFacade } from "src/app/ngrx/store/blog/blog.facade";
 import { IBlogPost } from "src/app/models/blog.models";
@@ -31,9 +31,12 @@ export class BlogDataService {
   tags$ = this.blogFacade.tags$
   tagsById$ = this.blogFacade.tagsById$
 
-  blogPosts$ = this.blogPostCS.blogs$
+  blogPosts$ = this.blogPostCS.blogs$.pipe(
+    startWith([])
+  )
   selectedBlogPost$ = this.selectedBlogPostId$.pipe(
     switchMap((blogPostId: number | null) => {
+      console.log('post it ', blogPostId)
       if (blogPostId) {
         return this.blogPostCS.getBlogPostById(blogPostId)
       } else {
@@ -43,7 +46,9 @@ export class BlogDataService {
     shareReplay({ refCount: true, bufferSize: 1 }),
   )
 
-  blogPostsCount$ = this.blogPostCS.blogsCount$;
+  blogPostsCount$ = this.blogPostCS.blogsCount$.pipe(
+    startWith(0)
+  )
   listPage$ = combineLatest(this.blogPostsCount$, this.selectedListPage$).pipe(
     distinctUntilChanged(),
     filter(
@@ -58,10 +63,10 @@ export class BlogDataService {
   );
 
   paginateBlogPosts(allBlogPosts: IBlogPost[], page: number) {
-    return allBlogPosts.slice(
+    return allBlogPosts?.length ? allBlogPosts.slice(
       (page - 1) * this.blogPostspaginationSize,
       page * this.blogPostspaginationSize
-    );
+    ) : [];
   }
 
   blogPostsPerPage$ = combineLatest(this.blogPosts$, this.listPage$).pipe(
@@ -72,7 +77,9 @@ export class BlogDataService {
   );
 
   data$ = combineLatest(
-    this.blogPostCS.loading$,
+    this.blogPostCS.loading$.pipe(
+      startWith(false)
+    ),
     this.blogPostsCount$,
     this.blogPostsPerPage$,
     this.listPage$,
