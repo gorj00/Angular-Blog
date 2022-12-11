@@ -69,7 +69,7 @@ export class BlogEffects implements OnInitEffects {
     )
   );
 
-  fetchBlogPostByIdFromRouterEffect$ = createEffect(() =>
+  fetchBlogPostByIdBasedOnRouterEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROUTER_NAVIGATION),
       filter((r: IRouterNavigationAction) => {
@@ -81,6 +81,18 @@ export class BlogEffects implements OnInitEffects {
         return params['blogPostId']
       }),
       map(id => this.blogCS.dispatchCSBlogPostFetchByIdForEffect(+id)),
+    )
+  );
+
+  // Consider adding tags fetch as well, already handled initial fetch in ngrxOnInitEffects
+  refetchBlogPostsBasedOnRouteEffect$= createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATION),
+      filter((r: IRouterNavigationAction) => {
+        const { payload: { routerState: { url } }} = r
+        return url === '/blog' || url === '/blog/'
+      }),
+      map(() => this.blogCS.dispatchCSBlogPostsFetchForEffect())
     )
   );
 

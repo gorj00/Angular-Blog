@@ -52,7 +52,12 @@ export class BlogCollectionService {
     }
   }
 
+  // ENTITY ACTIONS CALLED IN BLOG EFFECTS
   dispatchCSBlogPostFetchByIdForEffect(id: number) {
     return this.blogService.createEntityAction(EntityOp.QUERY_BY_KEY, id)
+  }
+
+  dispatchCSBlogPostsFetchForEffect() {
+    return this.blogService.createEntityAction(EntityOp.QUERY_ALL)
   }
 }

@@ -17,12 +17,16 @@ import { blogFeature } from 'src/app/ngrx/store/blog/blog.feature';
 import { BlogService } from 'src/app/services/blog.service';
 import { BlogDataService } from './blog-dara.service';
 import { BlogPostComponent } from './blog-post/blog-post.component';
+import { BlogPostDetailComponent } from './blog-post/blog-post-detail/blog-post-detail.component';
+import { BlogPostEditComponent } from './blog-post/blog-post-edit/blog-post-edit.component';
 
 @NgModule({
   declarations: [
     BlogPostsComponent,
     BlogSidebarComponent,
     BlogPostComponent,
+    BlogPostDetailComponent,
+    BlogPostEditComponent,
   ],
   imports: [
     CommonModule,

@@ -27,10 +27,7 @@ export class BlogDataService {
   tags$ = this.blogFacade.tags$
   tagsById$ = this.blogFacade.tagsById$
 
-  blogPosts$ = this.blogPostCS.blogs$.pipe(
-    // Warning! If no blogposts, infinite loop
-    tap((posts) => !posts?.length && this.blogPostCS.getBlogPosts())
-  );
+  blogPosts$ = this.blogPostCS.blogs$
 
   blogPostsCount$ = this.blogPostCS.blogsCount$;
   listPage$ = combineLatest(this.blogPostsCount$, this.selectedListPage$).pipe(
