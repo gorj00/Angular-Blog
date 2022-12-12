@@ -8,7 +8,8 @@ export class BlogDataService {
   private blogPostspaginationSize: number = 5;
   private selectedListPageSubject = new BehaviorSubject<number>(1);
   selectedListPage$ = this.selectedListPageSubject.asObservable();
-  private selectedBlogPostModeSubjecct = new Subject<EBlogModes>();
+  private selectedBlogPostModeSubjecct = new BehaviorSubject<EBlogModes>(EBlogModes.READ);
+  selectedBlogPostMode$ = this.selectedBlogPostModeSubjecct.asObservable()
   private editedBlogPostSubject = new BehaviorSubject<IBlogPost | null>(null);
   editedBlogPost$ = this.editedBlogPostSubject.asObservable()
 
@@ -96,9 +97,11 @@ export class BlogDataService {
     this.tagsById$,
     this.selectedBlogPost$,
     this.editedBlogPost$,
+    this.selectedBlogPostMode$,
   ).pipe(
-    map(([blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById, selectedBlogPost, editedBlogPost]) => ({
-      blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById, selectedBlogPost, editedBlogPost
+    distinctUntilChanged(),
+    map(([blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById, selectedBlogPost, editedBlogPost, selectedBlogPostMode]) => ({
+      blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById, selectedBlogPost, editedBlogPost, selectedBlogPostMode
     })),
     tap(obj => console.log(obj)),
     shareReplay({ refCount: true, bufferSize: 1 }),

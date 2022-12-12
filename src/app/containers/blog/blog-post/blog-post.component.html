@@ -1,5 +1,5 @@
 <ng-container *ngIf="data$ | async as data">
-  <mat-tab-group [selectedIndex]="0">
+  <mat-tab-group [selectedIndex]="data.selectedBlogPostMode">
 
     <mat-tab>
       <ng-template mat-tab-label>

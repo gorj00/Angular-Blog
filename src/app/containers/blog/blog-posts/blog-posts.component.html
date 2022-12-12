@@ -11,6 +11,12 @@
           <mat-card-content>
             <p>{{post.detail }}</p>
           </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onSelectBlogPost(post.id, EBlogModes.READ)">
+              DETAIL
+            </button>
+            <button mat-stroked-button color="primary" (click)="onSelectBlogPost(post.id, EBlogModes.EDIT)">EDIT</button>
+          </mat-card-actions>
           <mat-card-content *ngIf="post.tags.length">
             <mat-chip-list>
               <mat-chip *ngFor="let tag of post.tags">
@@ -18,12 +24,7 @@
               </mat-chip>
             </mat-chip-list>
           </mat-card-content>
-          <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="onSelectBlogPost(post.id, EBlogModes.READ)">
-              DETAIL
-            </button>
-            <button mat-raised-button color="primary">EDIT</button>
-          </mat-card-actions>
+
         </mat-card>
       </div>
     </ng-template>
