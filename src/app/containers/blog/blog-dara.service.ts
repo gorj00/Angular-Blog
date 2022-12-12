@@ -10,9 +10,9 @@ export class BlogDataService {
   selectedListPage$ = this.selectedListPageSubject.asObservable();
   private selectedBlogPostIdSubject = new BehaviorSubject<number | null>(null);
   selectedBlogPostId$ = this.selectedBlogPostIdSubject.asObservable();
-  // private selectedTagIdSubject = new Subject<number>();
   private selectedBlogPostModeSubjecct = new Subject<EBlogModes>();
-  // private editedBlogPostIdSubject = new Subject<number>();
+  private editedBlogPostSubject = new BehaviorSubject<IBlogPost | null>(null);
+  editedBlogPost$ = this.editedBlogPostSubject.asObservable()
 
   // INITIAL FETCHES ARE HANDLED IN NGRX EFFECTS IN BLOG STORE
   constructor(
@@ -33,7 +33,9 @@ export class BlogDataService {
   tagsById$ = this.blogFacade.tagsById$
 
   blogPosts$ = this.blogPostCS.blogs$.pipe(
-    startWith([])
+    startWith([]),
+    // TODO: Delete
+    tap((blogs) => !blogs?.length && this.blogPostCS.getBlogPosts())
   )
   selectedBlogPost$ = this.selectedBlogPostId$.pipe(
     switchMap((blogPostId: number | null) => {
@@ -44,6 +46,10 @@ export class BlogDataService {
         return of(null)
       }
     }),
+    // Prepare for editing
+    tap(blogPostOrNull => this.editedBlogPostSubject.next(
+      blogPostOrNull ? {...blogPostOrNull} : blogPostOrNull
+    )),
     shareReplay({ refCount: true, bufferSize: 1 }),
   )
 
@@ -86,10 +92,11 @@ export class BlogDataService {
     this.listPage$,
     this.tags$,
     this.tagsById$,
-    this.selectedBlogPost$
+    this.selectedBlogPost$,
+    this.editedBlogPost$,
   ).pipe(
-    map(([blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById, selectedBlogPost]) => ({
-      blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById, selectedBlogPost
+    map(([blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById, selectedBlogPost, editedBlogPost]) => ({
+      blogPostsLoading, blogPostsTotal, blogPostsPerPage, page, tags, tagsById, selectedBlogPost, editedBlogPost
     })),
     tap(obj => console.log(obj)),
     shareReplay({ refCount: true, bufferSize: 1 }),

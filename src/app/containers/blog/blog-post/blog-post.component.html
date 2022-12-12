@@ -1,21 +1,27 @@
-<mat-tab-group [selectedIndex]="0">
+<ng-container *ngIf="data$ | async as data">
+  <mat-tab-group [selectedIndex]="0">
 
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>article</mat-icon>
-      Detail
-    </ng-template>
-    <app-blog-post-detail
-      (onGoBackAction)="goBack()"
-    ></app-blog-post-detail>
-  </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>article</mat-icon>
+        Detail
+      </ng-template>
+      <app-blog-post-detail
+        (onGoBackAction)="goBack()"
+      ></app-blog-post-detail>
+    </mat-tab>
 
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>edit</mat-icon>
-      Edit
-    </ng-template>
-    <app-blog-post-edit></app-blog-post-edit>
-  </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>edit</mat-icon>
+        Edit
+      </ng-template>
+      <app-blog-post-edit
+        [post]="data.selectedBlogPost"
+      ></app-blog-post-edit>
+    </mat-tab>
 
-</mat-tab-group>
+  </mat-tab-group>
+</ng-container>
+
+

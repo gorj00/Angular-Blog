@@ -1,1 +1,19 @@
-<p>blog-post-edit works!</p>
+<form [formGroup]="postForm" (ngSubmit)="onSubmit(postForm)">
+  <mat-form-field appearance="outline">
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Detail</mat-label>
+    <textarea matInput formControlName="detail"></textarea>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Text</mat-label>
+    <textarea matInput formControlName="text" rows="20"></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">Save</button>
+</form>
+<!-- <app-blog-post-edit-tags
+>
+</app-blog-post-edit-tags> -->
+

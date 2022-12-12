@@ -1,7 +1,7 @@
 <ng-container *ngIf="data$ | async as data">
 
 <mat-card>
-  <button mat-button (click)="onGoBack()">ZPĚT</button>
+  <button mat-stroked-button (click)="onGoBack()">ZPĚT</button>
   <mat-card-header>
     <mat-card-title>{{ data.selectedBlogPost?.title }}</mat-card-title>
   </mat-card-header>
