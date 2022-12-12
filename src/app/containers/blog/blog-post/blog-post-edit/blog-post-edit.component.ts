@@ -1,4 +1,4 @@
-import { IBlogPost } from 'src/app/models/blog.models';
+import { IBlogPost, ITagsById } from 'src/app/models/blog.models';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlogDataService } from '../../blog-dara.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -10,6 +10,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class BlogPostEditComponent implements OnInit {
   @Output() onGoBackAction = new EventEmitter<void>()
   @Output() onFormSavedAction = new EventEmitter<IBlogPost>()
+
+  @Input() allTags!: ITagsById
+
   private _post!: IBlogPost | null;
   @Input()
   set post(post: IBlogPost | null) {

@@ -17,6 +17,8 @@ export interface INewTag {
   name: string;
 }
 
+export interface ITagsById { [key: number]: ITag }
+
 export interface ITagsState {
   tags:      ITag[];
   tagsById:  {[key: number]: ITag};
@@ -37,9 +39,10 @@ export const Tag = {
   },
 }
 
- export enum EBlogModes {
-    READ = 0,
-    EDIT = 1,
-  }
+// Used to identify active tab in post
+export enum EBlogModes {
+  READ = 0,
+  EDIT = 1,
+}
 
 

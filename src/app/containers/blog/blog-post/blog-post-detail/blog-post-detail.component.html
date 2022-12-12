@@ -1,7 +1,9 @@
 <ng-container *ngIf="data$ | async as data">
 
 <mat-card>
-  <button mat-stroked-button (click)="onGoBack()">ZPĚT</button>
+  <div class="text-right">
+    <button mat-stroked-button (click)="onGoBack()">ZPĚT</button>
+  </div>
   <mat-card-header>
     <mat-card-title>{{ data.selectedBlogPost?.title }}</mat-card-title>
   </mat-card-header>
@@ -11,8 +13,10 @@
   </mat-card-content>
   <mat-card-content *ngIf="data.selectedBlogPost?.tags?.length">
     <mat-chip-list>
-      <mat-chip *ngFor="let tag of data.selectedBlogPost?.tags">
-        {{ data.tagsById[tag].name }}
+      <mat-chip *ngFor="let tagId of data.selectedBlogPost?.tags">
+        <ng-container *ngIf="data.tagsById[tagId]">
+          {{ data.tagsById[tagId].name }}
+        </ng-container>
       </mat-chip>
     </mat-chip-list>
   </mat-card-content>

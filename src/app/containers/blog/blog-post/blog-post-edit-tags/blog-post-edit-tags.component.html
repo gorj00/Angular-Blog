@@ -1,26 +1,28 @@
-<!-- <mat-form-field appearance="outline">
+<mat-form-field appearance="outline">
   <mat-label>Post's tags</mat-label>
   <mat-chip-list #chipList aria-label="Tags selection">
     <mat-chip
-      *ngFor="let tag of tags"
-      (removed)="remove(tag.id)">
-      {{tag.name}}
+      *ngFor="let tagId of tags"
+      (removed)="remove(tagId)">
+      <ng-container *ngIf="allTags[tagId]">
+        {{ allTags[tagId].name }}
+      </ng-container>
       <button matChipRemove>
         <mat-icon>cancel</mat-icon>
       </button>
     </mat-chip>
-    <input
+    <!-- <input
       placeholder="New tag..."
       #tagInput
       [formControl]="tagCtrl"
       [matAutocomplete]="auto"
       [matChipInputFor]="chipList"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      (matChipInputTokenEnd)="add($event)">
+      (matChipInputTokenEnd)="add($event)"> -->
   </mat-chip-list>
-  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+  <!-- <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
     <mat-option *ngFor="let tag of filteredTags | async" [value]="tag.id">
       {{tag.name}}
     </mat-option>
-  </mat-autocomplete>
-</mat-form-field> -->
+  </mat-autocomplete> -->
+</mat-form-field>
