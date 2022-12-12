@@ -6,6 +6,11 @@ export interface IRouterState {
   queryParams: Params;
 }
 
+export interface IAppRouterState {
+  navigationId: number;
+  state: IRouterState
+}
+
 export interface IRouterNavigationAction {
   type: string;
   payload: {

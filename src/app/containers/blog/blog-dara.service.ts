@@ -8,8 +8,6 @@ export class BlogDataService {
   private blogPostspaginationSize: number = 5;
   private selectedListPageSubject = new BehaviorSubject<number>(1);
   selectedListPage$ = this.selectedListPageSubject.asObservable();
-  private selectedBlogPostIdSubject = new BehaviorSubject<number | null>(null);
-  selectedBlogPostId$ = this.selectedBlogPostIdSubject.asObservable();
   private selectedBlogPostModeSubjecct = new Subject<EBlogModes>();
   private editedBlogPostSubject = new BehaviorSubject<IBlogPost | null>(null);
   editedBlogPost$ = this.editedBlogPostSubject.asObservable()
@@ -25,7 +23,6 @@ export class BlogDataService {
   }
 
   onSelectBlogPost(blogPostId: number | null, mode: EBlogModes = EBlogModes.READ) {
-    this.selectedBlogPostIdSubject.next(blogPostId)
     this.selectedBlogPostModeSubjecct.next(mode)
   }
 
@@ -37,21 +34,26 @@ export class BlogDataService {
     // TODO: Delete
     tap((blogs) => !blogs?.length && this.blogPostCS.getBlogPosts())
   )
-  selectedBlogPost$ = this.selectedBlogPostId$.pipe(
-    switchMap((blogPostId: number | null) => {
-      console.log('post it ', blogPostId)
-      if (blogPostId) {
-        return this.blogPostCS.getBlogPostById(blogPostId)
-      } else {
-        return of(null)
-      }
-    }),
-    // Prepare for editing
-    tap(blogPostOrNull => this.editedBlogPostSubject.next(
-      blogPostOrNull ? {...blogPostOrNull} : blogPostOrNull
-    )),
-    shareReplay({ refCount: true, bufferSize: 1 }),
-  )
+
+  // electedBlogPost BlogPostId handled with subject, replaced with @ngrx/router
+
+  // selectedBlogPost$ = this.selectedBlogPostId$.pipe(
+  //   switchMap((blogPostId: number | null) => {
+  //     console.log('post it ', blogPostId)
+  //     if (blogPostId) {
+  //       return this.blogPostCS.getBlogPostById(blogPostId)
+  //     } else {
+  //       return of(null)
+  //     }
+  //   }),
+  //   // Prepare for editing
+  //   tap(blogPostOrNull => this.editedBlogPostSubject.next(
+  //     blogPostOrNull ? {...blogPostOrNull} : blogPostOrNull
+  //   )),
+  //   shareReplay({ refCount: true, bufferSize: 1 }),
+  // )
+
+  selectedBlogPost$ = this.blogPostCS.selectedBlog$
 
   blogPostsCount$ = this.blogPostCS.blogsCount$.pipe(
     startWith(0)

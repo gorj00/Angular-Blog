@@ -1,36 +1,38 @@
-
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import {
-  EntityCollectionDataService,
   EntityCollectionServiceFactory,
-  DefaultDataService,
-  HttpUrlGenerator,
-  Logger,
-  QueryParams,
   EntityOp
 } from '@ngrx/data';
 import { BlogPostDataService } from './blog-post.data-service';
 import { Observable } from 'rxjs';
-import { tap, mergeMap } from 'rxjs/operators';
-import { BlogPost, IBlogPost } from '../../../models/blog.models';
+import { tap, map } from 'rxjs/operators';
+import { IBlogPost } from '../../../models/blog.models';
+import { Store } from '@ngrx/store';
+import { selectedSelectedBlogPost } from './blog.entity-selectors';
+import { IAppState } from 'src/app/models/state.models';
 
 @Injectable()
 export class BlogCollectionService {
   blogService
   blogs$: Observable<IBlogPost[]>
-  loading$
+  selectedBlog$: Observable<IBlogPost | null>
   blogsCount$
+  loading$
+
 
   constructor(
     EntityCollectionServiceFactory: EntityCollectionServiceFactory,
     private blogPostDataService: BlogPostDataService,
+    private store: Store<IAppState>,
   ) {
     this.blogService = EntityCollectionServiceFactory.create<IBlogPost>('BlogPost');
 
     this.loading$ = this.blogService.loading$;
     this.blogs$ = this.blogService.entities$
     this.blogsCount$ = this.blogService.count$
+    this.selectedBlog$ = this.store.select(selectedSelectedBlogPost).pipe(
+      map(blogPost => blogPost ? blogPost : null)
+    )
   }
 
   getBlogPosts() { this.blogService.getAll(); }

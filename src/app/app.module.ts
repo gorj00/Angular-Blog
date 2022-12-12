@@ -14,7 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { RouterSerializer } from './ngrx/router/router-serializer';
 
 @NgModule({
@@ -28,7 +28,7 @@ import { RouterSerializer } from './ngrx/router/router-serializer';
     CoreModule,
     SharedModule,
     RouterModule.forRoot([]),
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ router: routerReducer }, {}),
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
