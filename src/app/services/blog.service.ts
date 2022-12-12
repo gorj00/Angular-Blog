@@ -1,3 +1,4 @@
+import { IBlogPost } from 'src/app/models/blog.models';
 import { HttpService } from './http.service'; // service injected imported
 import { Injectable, Inject } from '@angular/core'; // Injectable() imported
 import { HttpParams } from '@angular/common/http';
@@ -8,6 +9,7 @@ import { ITag, INewTag } from '../models/blog.models';
 export class BlogService {
   paths = {
     tag: 'tag',
+    blog: 'blog',
   };
 
   constructor(private http: HttpService) {}
@@ -24,10 +26,14 @@ export class BlogService {
   }
 
   createTag(newTag: INewTag): Observable<ITag> {
-    return this.http.Post(this.reqUrl(this.paths.tag), newTag);
+    return this.http.Post(this.reqUrl(`${this.paths.tag}/`), newTag);
   }
 
   updateTag(proposedTag: ITag): Observable<ITag> {
     return this.http.Put(this.reqUrl(`${this.paths.tag}/${proposedTag.id}`), proposedTag);
+  }
+
+  addTagToBlogPost(tagId: number, blogPostId: number): Observable<IBlogPost> {
+    return this.http.Put(this.reqUrl(`${this.paths.blog}/${blogPostId}/add_tag/${tagId}/`));
   }
 }

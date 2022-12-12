@@ -1,4 +1,4 @@
-import { IBlogPost, ITagsById } from 'src/app/models/blog.models';
+import { IBlogPost, INewTag, ITagsById,  } from 'src/app/models/blog.models';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlogDataService } from '../../blog-dara.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -41,6 +41,10 @@ export class BlogPostEditComponent implements OnInit {
     detail: new FormControl('', Validators.required),
     text: new FormControl('', Validators.required),
   });
+
+  onCreateNewTagRequested(proposedTagName: string) {
+    this.blogDataService.createNewTag(proposedTagName)
+  }
 
   onSubmit(form: FormGroup) {
     if (form && this.post) {

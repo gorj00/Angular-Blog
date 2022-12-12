@@ -52,7 +52,7 @@ export class HttpService {
    * @param {IRequestOptions} options options of the request like headers, body, etc.
    * @returns {Observable<T>}
    */
-  public Put<T>(endPoint: string, body: Object, options?: IRequestOptions): Observable<T> {
+  public Put<T>(endPoint: string, body?: Object, options?: IRequestOptions): Observable<T> {
     return this.http.put<T>(this.api + endPoint, body, options);
   }
 

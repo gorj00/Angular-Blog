@@ -17,7 +17,8 @@ export const blogFeature = createFeature({
     on(
       BlogActions.tags_list_request ||
       BlogActions.create_tag_request ||
-      BlogActions.update_tag_request
+      BlogActions.update_tag_request ||
+      BlogActions.add_tag_to_blogpost_request
     , (state: ITagsState) => ({
       ...state,
       loading: true,
@@ -31,7 +32,8 @@ export const blogFeature = createFeature({
     })),
     on(
       BlogActions.create_tag_response ||
-      BlogActions.update_tag_response
+      BlogActions.update_tag_response ||
+      BlogActions.add_tag_to_blogpost_response
     , (state: ITagsState) => ({
       ...state,
       loading: false,
@@ -39,7 +41,8 @@ export const blogFeature = createFeature({
     on(
       BlogActions.create_tag_failure ||
       BlogActions.tags_list_failure ||
-      BlogActions.update_tag_failure
+      BlogActions.update_tag_failure ||
+      BlogActions.add_tag_to_blogpost_failure
     , (state: ITagsState, { error }) => ({
       ...state,
       loading: false,

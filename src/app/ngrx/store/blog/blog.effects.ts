@@ -1,4 +1,5 @@
-import { switchMap } from 'rxjs';
+import { IBlogPost } from 'src/app/models/blog.models';
+import { switchMap, combineLatest } from 'rxjs';
 import { ITag } from './../../../models/blog.models';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -50,12 +51,49 @@ export class BlogEffects implements OnInitEffects {
       ofType(BlogActions.create_tag_request),
       mergeMap(({ newTag }) => this.blogService.createTag(newTag)
         .pipe(
-          map((newTag) => BlogActions.create_tag_response(newTag)),
+          mergeMap((newTag) => [
+            BlogActions.create_tag_response(newTag),
+            BlogActions.tags_list_request(),
+          ]),
           catchError((error) => of(BlogActions.create_tag_failure(error)))
         )
       )
     )
   );
+
+  addTagToBlogPostEffect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BlogActions.add_tag_to_blogpost_request),
+      mergeMap(({ tagId, blogPostId }) => this.blogService.addTagToBlogPost(tagId, blogPostId)
+        .pipe(
+          mergeMap((updatedBlogPost) => [
+            BlogActions.add_tag_to_blogpost_response(updatedBlogPost),
+            this.blogCS.dispatchCSBlogPostsFetchForEffect(),
+          ]),
+          catchError((error) => of(BlogActions.add_tag_to_blogpost_failure(error)))
+        )
+      )
+    )
+  );
+
+  addNewlyCreatedTagToSelectedBlogPostEffect$ = createEffect(() =>
+  combineLatest([
+    // 1st action
+    this.actions$.pipe(
+      ofType(BlogActions.create_tag_response),
+    ),
+    // 2nd action
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATION),
+      map((r: IRouterNavigationAction) => {
+        const { payload: { routerState: { params } }} = r
+        return params['blogPostId']
+      }),
+    ),
+  ]).pipe(
+    map(([{ item }, blogPostId]) => BlogActions.add_tag_to_blogpost_request(item.id, blogPostId) ),
+  )
+);
 
   updateTagEffect$ = createEffect(() =>
     this.actions$.pipe(

@@ -26,4 +26,10 @@ export class BlogFacade {
     this.store.dispatch(BlogActions.update_tag_request(proposedTag))
   }
 
+  addTagToBlogPost(tagId: number, blogPostId: number) {
+    this.store.dispatch(BlogActions.add_tag_to_blogpost_request(
+      tagId, blogPostId
+    ))
+  }
+
 }

@@ -1,3 +1,4 @@
+import { IBlogPost } from 'src/app/models/blog.models';
 import { createActionGroup, emptyProps } from '@ngrx/store';
 import { ITag, INewTag } from '../../../models/blog.models';
 
@@ -14,6 +15,10 @@ enum actionTypes {
   UPDATE_TAG_REQUEST = 'UPDATE_TAG_REQUEST',
   UPDATE_TAG_RESPONSE = 'UPDATE_TAG_RESPONSE',
   UPDATE_TAG_FAILURE = 'UPDATE_TAG_FAILURE',
+
+  ADD_TAG_TO_BLOGPOST_REQUEST = 'ADD_TAG_TO_BLOGPOST_REQUEST',
+  ADD_TAG_TO_BLOGPOST_RESPONSE = 'ADD_TAG_TO_BLOGPOST_RESPONSE',
+  ADD_TAG_TO_BLOGPOST_FAILURE = 'ADD_TAG_TO_BLOGPOST_FAILURE'
 }
 
 export const BlogActions = createActionGroup({
@@ -34,5 +39,9 @@ export const BlogActions = createActionGroup({
     [actionTypes.UPDATE_TAG_REQUEST]: (proposedTag: ITag) => ({ proposedTag }),
     [actionTypes.UPDATE_TAG_RESPONSE]: (updatedTag: ITag) => ({ updatedTag }),
     [actionTypes.UPDATE_TAG_FAILURE]: (error: any) => ({ error }),
+
+    [actionTypes.ADD_TAG_TO_BLOGPOST_REQUEST]: (tagId: number, blogPostId: number) => ({ tagId, blogPostId }),
+    [actionTypes.ADD_TAG_TO_BLOGPOST_RESPONSE]: (item: IBlogPost) => ({ item }),
+    [actionTypes.ADD_TAG_TO_BLOGPOST_FAILURE]: (error: any) => ({ error }),
   }
 });

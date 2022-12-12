@@ -25,6 +25,15 @@ export class BlogDataService {
     this.selectedListPageSubject.next(page);
   }
 
+  updateBlogPost(post: IBlogPost) {
+    this.blogPostCS.updateBlogPost(post)
+  }
+
+  createNewTag(name: string) {
+    this.blogFacade.crateNewTag({name})
+    // the tag is then added to the current selected blogPost in addNewlyCreatedTagToSelectedBlogPostEffect
+  }
+
   onSelectBlogPost(
     blogPostId: number | null,
     mode: EBlogModes = EBlogModes.READ

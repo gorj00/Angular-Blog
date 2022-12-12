@@ -16,6 +16,7 @@
 <app-blog-post-edit-tags
   [allTags]="allTags"
   [tags]="post ? post.tags : []"
+  (onCreateNewTag)="onCreateNewTagRequested($event)"
 >
 </app-blog-post-edit-tags>
 

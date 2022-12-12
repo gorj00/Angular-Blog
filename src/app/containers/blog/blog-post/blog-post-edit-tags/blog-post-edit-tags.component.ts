@@ -15,7 +15,7 @@ import * as _ from 'lodash'
 export class BlogPostEditTagsComponent implements OnInit {
   @Output() onAddTagAction = new EventEmitter<number>();
   @Output() onRemoveTagAction = new EventEmitter<number>();
-  @Output() onCreateNewTagAndAddAction = new EventEmitter<string>();
+  @Output() onCreateNewTag = new EventEmitter<string>();
 
   @Input() tags!: number[];
   @Input() allTags!: ITagsById;
@@ -42,12 +42,14 @@ export class BlogPostEditTagsComponent implements OnInit {
     // Add new tag
     if (value) {
       // this.tags.push(value);
+      // Created new tag and adds it to the current blogpost,
+      // more info in blog-data.service.ts
+      this.onCreateNewTag.emit(value)
       console.log('new val', value);
     }
 
     // Clear the input value
     event.chipInput!.clear();
-
     this.tagCtrl.setValue(null);
   }
 
@@ -57,6 +59,7 @@ export class BlogPostEditTagsComponent implements OnInit {
     // if (index >= 0) {
     //   this.tags.splice(index, 1);
     // }
+    this.onRemoveTagAction.emit(tagId)
     console.log('remove ', tagId);
   }
 
@@ -64,15 +67,22 @@ export class BlogPostEditTagsComponent implements OnInit {
     // this.tags.push(event.option.viewValue);
     // this.tagInput.nativeElement.value = '';
     // this.tagCtrl.setValue(null);
-    console.log('selected ', event.option);
+    this.onAddTagAction.emit(event.option.value)
+    console.log('selected ', event.option.value);
   }
 
   private _filter(value: string): ITag[] {
-    const filterValue = value.toLowerCase();
+    // Ensure handling string, as the function is called when a tagId (number) is selected as well,
+    // ingore such cases and return []
+    if (typeof value === 'string') {
+      console.log('filter ', value)
+      const filterValue = value.toLowerCase();
 
-    return Object.values(this.allTags).filter((tag) =>
-      tag.name.toLowerCase().includes(filterValue)
-    );
+      return Object.values(this.allTags).filter((tag) =>
+        tag.name.toLowerCase().includes(filterValue)
+      );
+    }
+    return [];
   }
 
   ngOnInit(): void {}

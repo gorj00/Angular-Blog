@@ -4,7 +4,7 @@ import {
   EntityOp
 } from '@ngrx/data';
 import { BlogPostDataService } from './blog-post.data-service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { IBlogPost } from '../../../models/blog.models';
 import { Store } from '@ngrx/store';
@@ -46,14 +46,15 @@ export class BlogCollectionService {
     if (blogPostId && tagId) {
       this.blogService.setLoaded(false)
       this.blogService.setLoading(true)
-      this.blogPostDataService.addTagToBlogPost(blogPostId, tagId).pipe(
+      return this.blogPostDataService.addTagToBlogPost(blogPostId, tagId).pipe(
         tap((updatedBlogPost: IBlogPost) => {
           this.blogService.updateOneInCache(updatedBlogPost)
           this.blogService.setLoading(false)
           this.blogService.setLoaded(true)
         })
-      ).subscribe()
+      )
     }
+    return of(null)
   }
 
   // ENTITY ACTIONS CALLED IN BLOG EFFECTS
