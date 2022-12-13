@@ -5,6 +5,7 @@ import { BlogFacade } from 'src/app/ngrx/store/blog/blog.facade';
 import { BlogDataService } from '../blog-dara.service';
 import { Router } from '@angular/router';
 import { EBlogModes } from 'src/app/models/blog.models';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-blog-posts',
@@ -13,7 +14,6 @@ import { EBlogModes } from 'src/app/models/blog.models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogPostsComponent implements OnInit {
-
 
   constructor(
     private http: HttpService,
@@ -33,10 +33,11 @@ export class BlogPostsComponent implements OnInit {
     this.router.navigate(['/blog', id])
   }
 
+  onSelectPage(e: PageEvent) {
+    this.blogDataService.onChangePage(e.pageIndex + 1)
+  }
+
   ngOnInit(): void {
-    // this.tagsFacade.fetchTagsList()
-    // this.bs.getBlogPosts()
-    // this.bs.addTagToBlogPost(10, 6)
   }
 
 }

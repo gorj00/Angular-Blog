@@ -23,6 +23,7 @@ export class BlogDataService {
 
   onChangePage(page: number) {
     this.selectedListPageSubject.next(page);
+    console.log(page)
   }
 
   updateBlogPost(post: IBlogPost) {
@@ -73,11 +74,11 @@ export class BlogDataService {
   blogPostsCount$ = this.blogPostCS.blogsCount$.pipe(startWith(0));
   listPage$ = combineLatest(this.blogPostsCount$, this.selectedListPage$).pipe(
     distinctUntilChanged(),
-    filter(
-      ([blogPostCount, selectedListPage]) =>
-        blogPostCount > selectedListPage &&
-        blogPostCount / this.blogPostspaginationSize >= selectedListPage
-    ),
+    // filter(
+    //   ([blogPostCount, selectedListPage]) =>
+    //     blogPostCount > selectedListPage &&
+    //     blogPostCount / this.blogPostspaginationSize >= selectedListPage
+    // ),
     map(([blogPostCount, listPage]) => listPage),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
@@ -136,7 +137,4 @@ export class BlogDataService {
     tap((obj) => console.log(obj)),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
-  // tags$
-  // selectedBlogPost$
-  // selectedTag$
 }

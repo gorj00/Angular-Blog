@@ -2,7 +2,7 @@
   <ng-container *ngIf="data$ | async as data">
 
     <ng-template [ngIf]="data.blogPostsPerPage && !data.blogPostsLoading" [ngIfElse]="spinner">
-      <div class="offset-3 col-6 pb-5" *ngFor="let post of data.blogPostsPerPage">
+      <div class="offset-2 col-8 pb-5" *ngFor="let post of data.blogPostsPerPage">
         <mat-card>
           <mat-card-header>
             <mat-card-title>{{ post.title }}</mat-card-title>
@@ -19,14 +19,28 @@
           </mat-card-actions>
           <mat-card-content *ngIf="post.tags.length">
             <mat-chip-list>
-              <mat-chip *ngFor="let tag of post.tags">
-                {{ data.tagsById[tag].name }}
+              <mat-chip *ngFor="let tagId of post.tags">
+                <ng-container *ngIf="data.tagsById[tagId]">
+                  {{ data.tagsById[tagId].name }}
+                </ng-container>
               </mat-chip>
             </mat-chip-list>
           </mat-card-content>
 
         </mat-card>
       </div>
+      <div class="offset-3 col-6">
+        <mat-paginator
+          [length]="data.blogPostsTotal"
+          [pageSize]="5"
+          [hidePageSize]="true"
+          aria-label="Select page"
+          (page)="onSelectPage($event)"
+        >
+        </mat-paginator>
+      </div>
+
+
     </ng-template>
 
     <ng-template #spinner>
