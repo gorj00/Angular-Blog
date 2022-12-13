@@ -30,11 +30,10 @@ export class BlogHttpUrlGenerator extends DefaultHttpUrlGenerator {
           break;
       }
       // Never pluralize, backend always in singular form
-      const url = `${nRoot}/${/* this.aPluralizer.pluralize(
-        entityName
-      ) */urlEntityName}/`.toLowerCase();
+      const url = `${nRoot}/${urlEntityName}/`.toLowerCase();
 
       // console.log('-- entityName: ' + entityName + ', URL: ' + url);
+      console.log(url)
 
       resourceUrls = {
         entityResourceUrl: url,

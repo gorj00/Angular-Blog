@@ -37,13 +37,37 @@ export class BlogPostEditComponent implements OnInit {
   // data$ = this.blogDataService.data$
 
   postForm = new FormGroup({
-    title: new FormControl('', Validators.required),
-    detail: new FormControl('', Validators.required),
-    text: new FormControl('', Validators.required),
+    title: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+      Validators.maxLength(150),
+    ]),
+    detail: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+      Validators.maxLength(300),
+    ]),
+    text: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+      Validators.maxLength(3000),
+    ]),
   });
 
   onCreateNewTagRequested(proposedTagName: string) {
     this.blogDataService.createNewTag(proposedTagName)
+  }
+
+  onTagAddedToBlogPost(tagId: number) {
+    if (this.post) {
+      const editedPost: IBlogPost = {...this.post}
+      // const partialPost = {
+      //   id: this.post.id,
+      //   tags: this.post.tags?.length ? [...this.post.tags, tagId] : [tagId]
+      // }
+      editedPost.tags = editedPost.tags?.length ? [...editedPost?.tags, tagId] : [tagId]
+      this.blogDataService.updateBlogPost(editedPost)
+    }
   }
 
   onSubmit(form: FormGroup) {

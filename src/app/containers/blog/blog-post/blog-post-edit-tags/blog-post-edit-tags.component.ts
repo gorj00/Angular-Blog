@@ -41,11 +41,9 @@ export class BlogPostEditTagsComponent implements OnInit {
 
     // Add new tag
     if (value) {
-      // this.tags.push(value);
       // Created new tag and adds it to the current blogpost,
       // more info in blog-data.service.ts
       this.onCreateNewTag.emit(value)
-      console.log('new val', value);
     }
 
     // Clear the input value
@@ -67,7 +65,9 @@ export class BlogPostEditTagsComponent implements OnInit {
     // this.tags.push(event.option.viewValue);
     // this.tagInput.nativeElement.value = '';
     // this.tagCtrl.setValue(null);
-    this.onAddTagAction.emit(event.option.value)
+    const value = event.option.value
+    const containsAlready = this.tags.includes(value)
+    !containsAlready && this.onAddTagAction.emit(event.option.value)
     console.log('selected ', event.option.value);
   }
 
@@ -77,10 +77,12 @@ export class BlogPostEditTagsComponent implements OnInit {
     if (typeof value === 'string') {
       console.log('filter ', value)
       const filterValue = value.toLowerCase();
+      const allTagsArr = Object.values(this.allTags)
 
-      return Object.values(this.allTags).filter((tag) =>
-        tag.name.toLowerCase().includes(filterValue)
-      );
+      return allTagsArr.filter((tag) => {
+        const alreadyContains = this.tags.find(savedTagId => savedTagId === tag.id)
+        return tag.name.toLowerCase().includes(filterValue) && !alreadyContains
+      });
     }
     return [];
   }
