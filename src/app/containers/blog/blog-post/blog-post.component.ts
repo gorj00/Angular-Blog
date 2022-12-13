@@ -27,7 +27,7 @@ export class BlogPostComponent implements OnInit {
   }
 
   goBack() {
-    this.blogDataService.onSelectBlogPost(null)
+    this.blogDataService.onSelectBlogPost()
     this.router.navigate(['/blog'])
   }
 

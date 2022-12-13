@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Subject, BehaviorSubject, combineLatest, distinctUntilChanged, filter, map, shareReplay, tap, switchMap, of, startWith } from "rxjs";
+import { BehaviorSubject, combineLatest, distinctUntilChanged, filter, map, shareReplay, tap, switchMap, of, startWith } from "rxjs";
 import { BlogCollectionService } from "src/app/ngrx/data/blog/blog.collection-service";
 import { BlogFacade } from "src/app/ngrx/store/blog/blog.facade";
 import { IBlogPost, EBlogModes } from "src/app/models/blog.models";
@@ -30,13 +30,16 @@ export class BlogDataService {
     this.blogPostCS.updateBlogPost(post)
   }
 
+  addTagToBlogPost(tagId: number, blogPostId: number) {
+    this.blogFacade.addTagToBlogPost(tagId, blogPostId)
+  }
+
   createNewTag(name: string) {
     this.blogFacade.crateNewTag({name})
     // the tag is then added to the current selected blogPost in addNewlyCreatedTagToSelectedBlogPostEffect
   }
 
   onSelectBlogPost(
-    blogPostId: number | null,
     mode: EBlogModes = EBlogModes.READ
   ) {
     this.selectedBlogPostModeSubjecct.next(mode);
@@ -50,24 +53,6 @@ export class BlogDataService {
     // TODO: Delete
     tap((blogs) => !blogs?.length && this.blogPostCS.getBlogPosts())
   );
-
-  // electedBlogPost BlogPostId handled with subject, replaced with @ngrx/router
-
-  // selectedBlogPost$ = this.selectedBlogPostId$.pipe(
-  //   switchMap((blogPostId: number | null) => {
-  //     console.log('post it ', blogPostId)
-  //     if (blogPostId) {
-  //       return this.blogPostCS.getBlogPostById(blogPostId)
-  //     } else {
-  //       return of(null)
-  //     }
-  //   }),
-  //   // Prepare for editing
-  //   tap(blogPostOrNull => this.editedBlogPostSubject.next(
-  //     blogPostOrNull ? {...blogPostOrNull} : blogPostOrNull
-  //   )),
-  //   shareReplay({ refCount: true, bufferSize: 1 }),
-  // )
 
   selectedBlogPost$ = this.blogPostCS.selectedBlog$;
 

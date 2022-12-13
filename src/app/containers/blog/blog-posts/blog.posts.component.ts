@@ -29,7 +29,7 @@ export class BlogPostsComponent implements OnInit {
   EBlogModes = EBlogModes
 
   onSelectBlogPost(id: number, mode: EBlogModes = EBlogModes.READ) {
-    this.blogDataService.onSelectBlogPost(id, mode)
+    this.blogDataService.onSelectBlogPost(mode)
     this.router.navigate(['/blog', id])
   }
 

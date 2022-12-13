@@ -1,4 +1,4 @@
-import { IBlogPost, INewTag, ITagsById,  } from 'src/app/models/blog.models';
+import { IBlogPost, ITagsById,  } from 'src/app/models/blog.models';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlogDataService } from '../../blog-dara.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -34,8 +34,6 @@ export class BlogPostEditComponent implements OnInit {
     protected blogDataService: BlogDataService,
   ) {}
 
-  // data$ = this.blogDataService.data$
-
   postForm = new FormGroup({
     title: new FormControl('', [
       Validators.required,
@@ -60,13 +58,7 @@ export class BlogPostEditComponent implements OnInit {
 
   onTagAddedToBlogPost(tagId: number) {
     if (this.post) {
-      const editedPost: IBlogPost = {...this.post}
-      // const partialPost = {
-      //   id: this.post.id,
-      //   tags: this.post.tags?.length ? [...this.post.tags, tagId] : [tagId]
-      // }
-      editedPost.tags = editedPost.tags?.length ? [...editedPost?.tags, tagId] : [tagId]
-      this.blogDataService.updateBlogPost(editedPost)
+      this.blogDataService.addTagToBlogPost(tagId, this.post.id)
     }
   }
 
