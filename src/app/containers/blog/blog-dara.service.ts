@@ -119,7 +119,7 @@ export class BlogDataService {
         selectedBlogPostMode,
       })
     ),
-    tap((obj) => console.log(obj)),
+    // tap((obj) => console.log(obj)),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
 }
