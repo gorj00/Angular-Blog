@@ -20,7 +20,7 @@ import { BlogPostComponent } from './blog-post/blog-post.component';
 import { BlogPostDetailComponent } from './blog-post/blog-post-detail/blog-post-detail.component';
 import { BlogPostEditComponent } from './blog-post/blog-post-edit/blog-post-edit.component';
 import { BlogPostEditTagsComponent } from './blog-post/blog-post-edit-tags/blog-post-edit-tags.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [

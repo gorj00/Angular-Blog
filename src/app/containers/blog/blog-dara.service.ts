@@ -3,16 +3,18 @@ import { BehaviorSubject, combineLatest, distinctUntilChanged, filter, map, shar
 import { BlogCollectionService } from "src/app/ngrx/data/blog/blog.collection-service";
 import { BlogFacade } from "src/app/ngrx/store/blog/blog.facade";
 import { IBlogPost, EBlogModes } from "src/app/models/blog.models";
+
 @Injectable()
 export class BlogDataService {
   private blogPostspaginationSize: number = 5;
+
   private selectedListPageSubject = new BehaviorSubject<number>(1);
-  selectedListPage$ = this.selectedListPageSubject.asObservable();
+  private editedBlogPostSubject = new BehaviorSubject<IBlogPost | null>(null);
   private selectedBlogPostModeSubjecct = new BehaviorSubject<EBlogModes>(
     EBlogModes.READ
   );
+  selectedListPage$ = this.selectedListPageSubject.asObservable();
   selectedBlogPostMode$ = this.selectedBlogPostModeSubjecct.asObservable();
-  private editedBlogPostSubject = new BehaviorSubject<IBlogPost | null>(null);
   editedBlogPost$ = this.editedBlogPostSubject.asObservable();
 
   // INITIAL FETCHES ARE HANDLED IN NGRX EFFECTS IN BLOG STORE
@@ -45,8 +47,19 @@ export class BlogDataService {
     this.selectedBlogPostModeSubjecct.next(mode);
   }
 
+  private paginateBlogPosts(allBlogPosts: IBlogPost[], page: number) {
+    return allBlogPosts?.length
+      ? allBlogPosts.slice(
+          (page - 1) * this.blogPostspaginationSize,
+          page * this.blogPostspaginationSize
+        )
+      : [];
+  }
+
   tags$ = this.blogFacade.tags$;
   tagsById$ = this.blogFacade.tagsById$;
+  selectedBlogPost$ = this.blogPostCS.selectedBlog$;
+  blogPostsCount$ = this.blogPostCS.blogsCount$.pipe(startWith(0));
 
   blogPosts$ = this.blogPostCS.blogs$.pipe(
     startWith([]),
@@ -54,9 +67,6 @@ export class BlogDataService {
     tap((blogs) => !blogs?.length && this.blogPostCS.getBlogPosts())
   );
 
-  selectedBlogPost$ = this.blogPostCS.selectedBlog$;
-
-  blogPostsCount$ = this.blogPostCS.blogsCount$.pipe(startWith(0));
   listPage$ = combineLatest(this.blogPostsCount$, this.selectedListPage$).pipe(
     distinctUntilChanged(),
     // filter(
@@ -67,15 +77,6 @@ export class BlogDataService {
     map(([blogPostCount, listPage]) => listPage),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
-
-  paginateBlogPosts(allBlogPosts: IBlogPost[], page: number) {
-    return allBlogPosts?.length
-      ? allBlogPosts.slice(
-          (page - 1) * this.blogPostspaginationSize,
-          page * this.blogPostspaginationSize
-        )
-      : [];
-  }
 
   blogPostsPerPage$ = combineLatest(this.blogPosts$, this.listPage$).pipe(
     switchMap(([posts, listPage]) =>

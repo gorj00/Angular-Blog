@@ -13,6 +13,7 @@
   </mat-form-field>
   <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">Save</button>
 </form>
+
 <app-blog-post-edit-tags
   [allTags]="allTags"
   [tags]="post ? post.tags : []"

@@ -1,7 +1,7 @@
 <mat-card *ngIf="data$ | async as data">
   <h2>Tags</h2>
   <mat-list>
-    <app-sidebar-list-item *ngFor="let tag of data.tags; index as i"
+    <app-sidebar-list-item *ngFor="let tag of data.tags"
       [text]="tag.name"
       [icon]="'folder'"
       [emitData]="tag.id"

@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: BlogSidebarComponent, outlet: 'sidebar'},
   { path: '', component: BlogPostsComponent },
   { path: ':blogPostId', component: BlogPostComponent },
-  // { path: '/new', component: BlogPostsComponent, },
+  // { path: '/new', component: , },
 
 ];
 

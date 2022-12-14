@@ -2,6 +2,7 @@ import { IBlogPost, ITagsById,  } from 'src/app/models/blog.models';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlogDataService } from '../../blog-dara.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-blog-post-edit',
   templateUrl: './blog-post-edit.component.html',
